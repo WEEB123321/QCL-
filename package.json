@@ -1,0 +1,9 @@
+{
+  "name": "qcl-sponsor-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quanta Craft Launcher 赞助网站（静态站点 + Netlify Function 名单存储）",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "updated": "2026-10-02",
+  "currency": "CNY",
+  "note": "按支付记录手动维护。新增赞助者时，在 sponsors 数组里追加一条即可，站点会自动重新渲染并累计总额。",
+  "sponsors": [
+    {
+      "name": "Minicrft",
+      "amount": 10,
+      "date": "2026-10-02"
+    }
+  ]
+}

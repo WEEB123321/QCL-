@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>赞助支持 · Quanta Craft Launcher（QCL）量子方块启动器</title>
+<meta name="description" content="Quanta Craft Launcher（QCL）是一个免费的 Android 版 Minecraft: Java Edition 启动器，唯一支持下载全部考古社区已归档远古版本。无广告、无内购，全部开销由作者自担。你的自愿赞助会让它继续维护下去。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="赞助支持 · Quanta Craft Launcher（QCL）">
+<meta property="og:description" content="一个免费的 Android 版 Minecraft Java 启动器，唯一支持下载全部已归档远古版本。无广告、无内购。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/qcl-icon.jpg">
+<link rel="icon" type="image/jpeg" href="assets/qcl-icon.jpg">
+<link rel="apple-touch-icon" href="assets/qcl-icon.jpg">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.className += ' js';</script>
+</head>
+<body>
+
+<svg class="lg-defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <filter id="lgEdge" x="-10%" y="-45%" width="120%" height="190%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0012 0.013" numOctaves="1" seed="9" result="noise"></feTurbulence>
+    <feGaussianBlur in="noise" stdDeviation="1.6" result="soft"></feGaussianBlur>
+    <feDisplacementMap in="SourceGraphic" in2="soft" scale="15" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+</svg>
+
+<canvas id="grid" aria-hidden="true"></canvas>
+<div class="halo off" id="halo" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- ======================= 导航（液态玻璃） ======================= -->
+<header class="nav" id="nav">
+  <div class="glass" aria-hidden="true">
+    <span class="glass-refract glass-refract-top"></span>
+    <span class="glass-refract glass-refract-bottom"></span>
+    <span class="glass-aberration"></span>
+    <span class="glass-sheen" id="glassSheen"></span>
+    <span class="glass-edge"></span>
+  </div>
+
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="assets/qcl-icon.jpg" alt="QCL 图标" width="34" height="34">
+      <span class="brand-text">
+        <b data-hop>QCL</b>
+        <i>赞助计划</i>
+      </span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="页面导航">
+      <a href="#about" data-hop>这是什么</a>
+      <a href="#features" data-hop>核心能力</a>
+      <a href="#why" data-hop>为什么赞助</a>
+      <a href="#thanks" data-hop>鸣谢</a>
+    </nav>
+
+    <a class="btn btn-solid btn-sm nav-cta" href="#donate" data-ripple data-hop>立即赞助</a>
+
+    <button class="dev-btn" id="devBtn" type="button" aria-label="开发者模式" title="开发者模式">
+      <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V7a3 3 0 0 1 3-3zm0 11a1.6 1.6 0 0 1 1 2.85V20h-2v-2.15A1.6 1.6 0 0 1 12 15z" fill="currentColor"/></svg>
+    </button>
+
+    <button class="nav-toggle" id="navToggle" aria-label="展开菜单" aria-expanded="false">
+      <i></i><i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= Hero ======================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="pill" data-reveal="fade">
+          <span class="pill-dot"></span>开源 · GPL-3.0 · 无广告 · 无内购
+        </p>
+
+        <h1 class="hero-title" data-split>让<em>远古版本</em>在手机上<br>继续跑得起来</h1>
+
+        <p class="lede" data-reveal="up" data-delay="120">
+          <strong>Quanta Craft Launcher（QCL，量子方块启动器）</strong>是一个完全免费的 Android 版
+          Minecraft: Java Edition 启动器。自 1.1.1 起，启动、渲染、输入与 Java 运行时链路全部自研。
+          它没有广告，没有内购，也不开会员 —— 到目前为止，所有开销都由作者一个人扛。
+        </p>
+
+        <div class="hero-cta" data-reveal="up" data-delay="200">
+          <a class="btn btn-solid" href="#donate" data-ripple>扫码赞助作者</a>
+          <a class="btn btn-line" href="https://github.com/ALLEN201123/Quanta-Craft-Launcher/releases/latest" target="_blank" rel="noopener" data-ripple>
+            下载最新版 <span class="ver">v1.4.2</span>
+          </a>
+        </div>
+
+        <ul class="hero-facts" data-reveal="up" data-delay="280" data-stagger>
+          <li>
+            <b data-count="181">181</b>
+            <span>已归档远古版本</span>
+          </li>
+          <li>
+            <b data-typer="26.x">26.x</b>
+            <span>支持上限版本</span>
+          </li>
+          <li>
+            <b data-pulse>0</b>
+            <span>广告 · 内购 · 会员</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" data-reveal="scale" data-delay="160">
+        <div class="cube-card">
+          <span class="deco deco-a" aria-hidden="true"></span>
+          <span class="deco deco-b" aria-hidden="true"></span>
+          <span class="deco deco-c" aria-hidden="true"></span>
+          <div class="cube-inner">
+            <img src="assets/qcl-icon.jpg" alt="Quanta Craft Launcher 应用图标" width="512" height="512">
+          </div>
+          <div class="cube-meta">
+            <span>Quanta Craft Launcher</span>
+            <span class="mono">v1.4.2 · 2026-10-02</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="hero-scroll" id="heroScroll" aria-label="向下浏览">
+      <span></span>
+    </button>
+  </section>
+
+  <!-- ======================= 这是什么 ======================= -->
+  <section class="sec" id="about">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal="mask">这是什么</p>
+      <h2 class="sec-title" data-reveal="mask" data-delay="60">一个专为「老版本」重做的安卓启动器</h2>
+
+      <div class="two-col">
+        <div class="prose">
+          <p data-reveal="up">
+            QCL 的重点不是堆功能，而是解决一个被长期忽略的问题：<strong>远古版本（pre-classic / classic /
+            indev / infdev / alpha / beta / RC）到底能不能装、能不能启动。</strong>
+          </p>
+          <p data-reveal="up" data-delay="80">
+            它是目前手机启动器里<strong>唯一支持下载全部考古社区已归档远古版本</strong>的（181 个已归档构建；
+            社区从未归档的构建无法提供下载），也是<strong>唯一为「全远古版本」做好中文</strong>的启动器。
+            每个归档构建都会自动补齐依赖与资源文件。
+          </p>
+          <p data-reveal="up" data-delay="160">
+            同时它并没有停在过去：版本覆盖一路到最新的 <span class="mono">26.x</span>（Java 25），
+            版本列表从 <span class="mono">26.3</span> 一直排到 <span class="mono">a1.2.0_02</span>，
+            共 114 个正式版。
+          </p>
+
+          <div class="author-card" data-reveal="left" data-delay="220">
+            <div class="avatar">R</div>
+            <div>
+              <p class="author-name">作者：Rod123456</p>
+              <p class="author-sub">bilibili UID 550905358 · 喜欢研究 Minecraft 1.0 以前的所有远古版本</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="spec-card" data-reveal="right" data-delay="120">
+          <h3>项目档案</h3>
+          <dl data-stagger>
+            <div><dt>项目名</dt><dd>Quanta Craft Launcher</dd></div>
+            <div><dt>中文名</dt><dd>量子方块启动器</dd></div>
+            <div><dt>平台</dt><dd>Android</dd></div>
+            <div><dt>类型</dt><dd>Minecraft: Java Edition 启动器</dd></div>
+            <div><dt>最新版本</dt><dd class="hl">v1.4.2</dd></div>
+            <div><dt>更新日期</dt><dd>2026-10-02</dd></div>
+            <div><dt>启动后端</dt><dd>Pojav + 原生 SDL3</dd></div>
+            <div><dt>开源许可</dt><dd>GNU GPL-3.0</dd></div>
+            <div><dt>历史来源</dt><dd>1.1.0 及更早基于 HMCL-PE</dd></div>
+          </dl>
+          <a class="btn btn-line btn-block" href="https://github.com/ALLEN201123/Quanta-Craft-Launcher" target="_blank" rel="noopener" data-ripple>查看 GitHub 仓库</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 核心能力 ======================= -->
+  <section class="sec soft" id="features">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal="mask">核心能力</p>
+      <h2 class="sec-title" data-reveal="mask" data-delay="60">它把功夫花在了哪些地方</h2>
+      <p class="sec-sub" data-reveal="up" data-delay="120">这些能力背后，是持续的版本跟进、真机适配与反复调试。</p>
+
+      <div class="grid" data-stagger>
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag tag-solid">独家</span>
+          <h3>全部已归档远古版本</h3>
+          <p>手机启动器里唯一支持下载考古社区已归档的全部远古版本（181 个构建），并自动补齐依赖与资源。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag tag-solid">独家</span>
+          <h3>全远古版本中文</h3>
+          <p>唯一为 pre-classic 到 RC 的<em>所有</em>远古版本做好中文补丁的启动器，老版本也能看懂界面与物品名。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">自研</span>
+          <h3>全链路自研</h3>
+          <p>1.1.1 起启动 / 渲染 / 输入 / Java 运行时链路全部自研，以 FCL 为参照实现，不再依赖早期代码核心。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">稳定</span>
+          <h3>内存安全夹取</h3>
+          <p>按运行时位数给默认值（64 位 2GB / 32 位 1GB），再按当前剩余内存动态夹取，避免 VM 初始化失败把启动器一起带走。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">兼容</span>
+          <h3>32 / 64 位自动检测</h3>
+          <p>跟随设备与应用的实际 ABI 自动选择运行时，也可在设置里手动强制。原生 SDL3 图形窗口，支持 26.3+。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">可选</span>
+          <h3>七种渲染器随手切</h3>
+          <p>长按启动键即可切换：Krypton Wrapper / Holy-GL4ES / Zink / VirGL / Freedreno / VGPU / MobileGlues，默认 Krypton，全版本通吃。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">可观测</span>
+          <h3>日志悬浮窗与崩溃界面</h3>
+          <p>启动日志悬浮窗默认开启，实时显示 JVM 与游戏输出，进主界面自动关闭；崩溃时有专门的崩溃界面而不是黑屏。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">国内优化</span>
+          <h3>镜像加速下载</h3>
+          <p>默认走 BMCLAPI 镜像；Modrinth / CurseForge 通过国内 MCIM 镜像访问，镜像不通自动回退官方。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">资源</span>
+          <h3>分页浏览与整合包导入</h3>
+          <p>Mod / 资源包 / 整合包 / 光影 / 世界分页浏览，支持 Prism、MultiMC 整合包导入，导入时自动补下游戏本体。</p>
+        </article>
+
+        <article class="card" data-reveal="up" data-tilt>
+          <span class="tag">账号</span>
+          <h3>微软账号与离线账号</h3>
+          <p>启动器内可添加、切换多个微软账号；离线账号默认史蒂夫（宽臂），支持导入 PNG 皮肤，头像与 3D 人物跟随皮肤变化。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 为什么赞助 ======================= -->
+  <section class="sec" id="why">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal="mask">为什么需要你的赞助</p>
+      <h2 class="sec-title" data-reveal="mask" data-delay="60">它一直是免费的，而维护不是</h2>
+      <p class="sec-sub" data-reveal="up" data-delay="120">赞助<strong>完全自愿</strong>。不赞助也能下载到功能完整的最新版，这是这个项目的底线。</p>
+
+      <div class="why-grid" data-stagger>
+        <div class="why-card" data-reveal="up" data-tilt>
+          <div class="why-ico">01</div>
+          <h3>没有收入来源</h3>
+          <p>项目不接广告、没有内购、不开会员，也不卖任何「特权版」。除赞助外，作者不从这份工作里获得任何收入。</p>
+        </div>
+        <div class="why-card" data-reveal="up" data-tilt>
+          <div class="why-ico">02</div>
+          <h3>一个人的项目</h3>
+          <p>从启动链路、渲染适配到版本跟进、中文补丁，基本由作者独自完成。你的赞助是最直接的「继续做下去」。</p>
+        </div>
+        <div class="why-card" data-reveal="up" data-tilt>
+          <div class="why-ico">03</div>
+          <h3>真实存在的开销</h3>
+          <p>构建与分发包体、镜像与下载流量、真机测试设备，加上每一个版本背后投入的时间 —— 这些都是实打实的成本。</p>
+        </div>
+        <div class="why-card" data-reveal="up" data-tilt>
+          <div class="why-ico">04</div>
+          <h3>远古版本不该消失</h3>
+          <p>让 pre-classic 到 RC 这些几乎被遗忘的构建，还能在新手机上被打开一次 —— 这件事值得有人做。</p>
+        </div>
+      </div>
+
+      <div class="promise" data-reveal="up" data-stagger>
+        <div class="promise-item"><b>不设门槛</b><span>所有功能对所有用户开放，赞助不换取特权。</span></div>
+        <div class="promise-item"><b>不添负担</b><span>金额随意，一杯饮料也是支持。</span></div>
+        <div class="promise-item"><b>不留痕迹</b><span>赞助不附带任何强制的署名或推广义务。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 赞助方式 ======================= -->
+  <section class="sec soft" id="donate">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal="mask">赞助方式</p>
+      <h2 class="sec-title" data-reveal="mask" data-delay="60">扫码即可，金额随意</h2>
+
+      <div class="donate-grid">
+        <div class="qr-card" data-reveal="flip" data-delay="80">
+          <div class="qr-tag">推荐使用微信支付</div>
+          <button class="qr-frame" id="qrOpen" aria-label="放大查看收款码" data-ripple>
+            <img src="assets/qr-wechat-pay.jpg" alt="微信支付收款码 · Allen(*泽)" width="720" height="960">
+            <span class="qr-zoom">放大查看</span>
+          </button>
+          <p class="qr-name">收款方：<b>Allen(*泽)</b></p>
+          <p class="qr-hint">长按图片保存到相册，或在微信中「扫一扫」</p>
+          <button class="btn btn-line btn-block btn-sm" id="qrOpen2" data-ripple>放大查看收款码</button>
+        </div>
+
+        <div class="steps">
+          <h3 data-reveal="up">三步完成</h3>
+
+          <ol class="step-list" data-reveal="draw">
+            <li>
+              <span class="step-no">1</span>
+              <div>
+                <b>保存或扫码</b>
+                <p>长按左侧收款码保存到相册，或直接用微信「扫一扫」对准它。</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-no">2</span>
+              <div>
+                <b>输入任意金额</b>
+                <p>金额完全由你决定，没有最低门槛，也不需要选任何档位。</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-no">3</span>
+              <div>
+                <b>可在附言里留名</b>
+                <p>如果想被记上一笔，可在附言写一个称呼；不想留名也完全没问题。</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="note" data-reveal="up" data-delay="120">
+            <b>请留意</b>
+            <p>
+              赞助是<strong>自愿的赠与行为</strong>，不是购买服务，也不构成任何形式的售后服务或功能承诺。
+              赞助前请确认收款方名称与上方一致（<span class="mono">Allen(*泽)</span>），谨防他人冒用本项目名义收款。
+            </p>
+          </div>
+
+          <div class="thanks" data-reveal="up" data-delay="180">
+            <div class="thanks-head">
+              <h4>感谢名单</h4>
+              <p class="thanks-stat" id="sponsorStat">
+                共 <b id="sponsorCount">0</b> 位支持者 · 累计 <b id="sponsorTotal">¥0</b>
+              </p>
+            </div>
+
+            <ul class="sponsor-list" id="sponsorList" aria-live="polite"></ul>
+
+            <p class="thanks-empty" id="sponsorEmpty" hidden>
+              名单会在这里公开。若你希望署名，请在支付附言中留下称呼。
+              <span class="blink-blocks" aria-hidden="true"><i></i><i></i><i></i></span>
+            </p>
+
+            <p class="thanks-note">
+              名单由作者在开发者模式下维护，保存后即时生效；未连接服务端时回退到
+              <span class="mono">data/sponsors.json</span>。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 鸣谢 ======================= -->
+  <section class="sec" id="thanks">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal="mask">鸣谢与开源许可</p>
+      <h2 class="sec-title" data-reveal="mask" data-delay="60">站在这些项目之上</h2>
+      <p class="sec-sub" data-reveal="up" data-delay="120">
+        QCL 以 <strong>GNU GPL-3.0</strong> 授权发布，发布（包括 APK）时必须同时提供完整对应源码。
+        以下项目与作者构成了它的基础：
+      </p>
+
+      <div class="credit-grid" data-stagger>
+        <div class="credit" data-reveal="pop"><b>FoldCraftLauncher (FCL)</b><span class="by">FCL-Team</span><p>1.1.1 起启动 / 渲染 / 输入 / 运行时方案的参照</p></div>
+        <div class="credit" data-reveal="pop"><b>HMCL-PE</b><span class="by">Tungs</span><p>本项目的历史来源（1.1.0 及更早版本的代码基础）</p></div>
+        <div class="credit" data-reveal="pop"><b>PojavLauncher</b><span class="by">PojavLauncherTeam / Amethyst-Android</span><p>JVM 启动与 LWJGL 移植</p></div>
+        <div class="credit" data-reveal="pop"><b>Terracotta</b><span class="by">BurningTNT</span><p>多人联机</p></div>
+        <div class="credit" data-reveal="pop"><b>LWJGL / GL4ES / OpenAL / OpenJDK</b><span class="by">各自作者</span><p>图形、音频与运行时</p></div>
+        <div class="credit" data-reveal="pop"><b>BMCLAPI</b><span class="by">bangbang93</span><p>国内下载镜像</p></div>
+      </div>
+
+      <div class="license" data-reveal="up">
+        <div class="license-badge">GPL-3.0</div>
+        <p>
+          第三方组件与各自许可、署名详见仓库中的 <span class="mono">THIRD_PARTY_NOTICES.md</span>；
+          完整许可全文见 <span class="mono">LICENSE</span>。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 免责声明 ======================= -->
+  <section class="sec soft" id="disclaimer">
+    <div class="wrap">
+      <div class="disclaimer" data-reveal="up">
+        <h2>免责声明</h2>
+        <ul data-stagger>
+          <li>本项目<strong>不包含 Minecraft 游戏本体与资源</strong>，使用需自备正版账号（或自建离线账号）。</li>
+          <li>多人联机功能<strong>仅限中国大陆地区</strong>使用。</li>
+          <li>本项目与 Mojang Studios、Microsoft 无任何隶属或合作关系。</li>
+          <li>赞助为自愿赠与，不接受未成年人使用未经监护人同意的资金进行赞助。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= 页脚 ======================= -->
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <div class="foot-brand" data-reveal="up">
+      <img src="assets/qcl-icon.jpg" alt="" width="38" height="38">
+      <div>
+        <b>Quanta Craft Launcher</b>
+        <span>量子方块启动器 · Android Minecraft: Java Edition 启动器</span>
+      </div>
+    </div>
+
+    <nav class="foot-links" data-reveal="up" data-stagger>
+      <a href="https://github.com/ALLEN201123/Quanta-Craft-Launcher" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/ALLEN201123/Quanta-Craft-Launcher/releases/latest" target="_blank" rel="noopener">下载</a>
+      <a href="#donate">赞助</a>
+      <a href="#thanks">鸣谢</a>
+    </nav>
+
+    <p class="foot-note">以 GNU GPL-3.0 授权 · 作者 Rod123456 · 感谢每一位愿意支持的人</p>
+  </div>
+</footer>
+
+<!-- 右下角浮动按钮 -->
+<div class="dock" id="dock">
+  <a class="dock-btn dock-sponsor" href="#donate" aria-label="前往赞助方式" data-ripple>赞助</a>
+  <button class="dock-btn dock-top" id="toTop" aria-label="回到顶部">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5l7 8h-4v6H9v-6H5z" fill="currentColor"/></svg>
+  </button>
+</div>
+
+<!-- 收款码灯箱 -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="收款码" hidden>
+  <button class="lb-close" id="lbClose" aria-label="关闭">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <div class="lb-body">
+    <img src="assets/qr-wechat-pay.jpg" alt="微信支付收款码 · Allen(*泽)">
+    <p>微信支付 · <b>Allen(*泽)</b></p>
+    <p class="lb-sub">长按图片保存到相册，或在微信中扫一扫</p>
+  </div>
+</div>
+
+<!-- 开发者模式（名单管理） -->
+<div class="dev" id="dev" hidden>
+  <div class="dev-scrim" id="devScrim"></div>
+
+  <aside class="dev-panel" role="dialog" aria-modal="true" aria-labelledby="devTitle">
+    <header class="dev-hd">
+      <div>
+        <p class="dev-kicker">Developer Mode</p>
+        <h2 class="dev-title" id="devTitle">感谢名单管理</h2>
+      </div>
+      <button class="dev-x" id="devClose" type="button" aria-label="关闭">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      </button>
+    </header>
+
+    <!-- 未解锁 -->
+    <div class="dev-gate" id="devGate">
+      <label class="dev-label" for="devPass">管理员密码</label>
+      <div class="dev-pass">
+        <input type="password" id="devPass" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="输入密码后回车">
+        <div class="dev-pass-btns">
+          <button type="button" class="dev-eye" id="devPaste">粘贴</button>
+          <button type="button" class="dev-eye" id="devEye">显示</button>
+        </div>
+      </div>
+      <p class="dev-msg" id="devMsg" role="status" aria-live="polite"></p>
+      <button class="btn btn-solid btn-block" id="devEnter" type="button">进入开发者模式</button>
+      <p class="dev-tip">
+        密码以 PBKDF2-SHA256（21 万次迭代）校验，明文不落盘。解锁仅在本次页面有效，刷新后需重新输入；
+        连续输错会触发递增锁定。<br>
+        首尾空格、零宽字符、全角符号（如 ！＋％）会被自动修正 —— 建议点「粘贴」而不是手输。
+      </p>
+    </div>
+
+    <!-- 已解锁 -->
+    <div class="dev-body" id="devBody" hidden>
+      <div class="dev-status" id="devStatus"></div>
+      <div class="dev-warn" id="devWarn" hidden></div>
+
+      <form class="dev-form" id="devForm" autocomplete="off">
+        <div class="dev-row">
+          <label class="dev-field">
+            <span>称呼</span>
+            <input name="name" required maxlength="40" placeholder="赞助者名称">
+          </label>
+          <label class="dev-field">
+            <span>金额</span>
+            <input name="amount" type="number" min="0" step="0.01" required placeholder="10">
+          </label>
+        </div>
+        <div class="dev-row">
+          <label class="dev-field">
+            <span>日期</span>
+            <input name="date" type="date">
+          </label>
+          <label class="dev-field">
+            <span>备注（可空）</span>
+            <input name="note" maxlength="60" placeholder="留空即可">
+          </label>
+        </div>
+        <div class="dev-form-actions">
+          <button class="btn btn-solid btn-block" type="submit" id="devAdd">加入名单</button>
+          <button class="btn btn-line btn-sm" type="button" id="devCancelEdit" hidden>取消编辑</button>
+        </div>
+      </form>
+
+      <ul class="dev-list" id="devList"></ul>
+
+      <div class="dev-actions">
+        <button class="btn btn-solid btn-sm" type="button" id="devSave">保存到线上</button>
+        <button class="btn btn-line btn-sm" type="button" id="devExport">下载 JSON</button>
+        <button class="btn btn-line btn-sm" type="button" id="devCopy">复制 JSON</button>
+        <button class="btn btn-line btn-sm" type="button" id="devImport">粘贴导入</button>
+        <button class="btn btn-line btn-sm dev-danger" type="button" id="devWipe">清空名单</button>
+      </div>
+
+      <p class="dev-tip" id="devHint"></p>
+
+      <details class="dev-gh" id="devGh">
+        <summary>GitHub 直连（配好之后可自助保存）</summary>
+        <div class="dev-gh-body">
+          <p class="dev-tip">
+            保存时由你的浏览器直接向 GitHub 提交 <span class="mono">data/sponsors.json</span>，
+            约 1 分钟后 GitHub Pages 自动重新发布，所有访客即可看到。<br>
+            令牌只存在这台设备的浏览器里，<b>不会写进仓库、也不会发往任何第三方</b>。
+            建议用 Fine-grained token，只勾选这一个仓库的 <b>Contents → Read and write</b>。
+          </p>
+
+          <label class="dev-field">
+            <span>仓库（owner/repo）</span>
+            <input id="ghRepo" spellcheck="false" autocomplete="off" placeholder="WEEB123321/qcl-sponsor">
+          </label>
+
+          <div class="dev-row">
+            <label class="dev-field">
+              <span>分支</span>
+              <input id="ghBranch" spellcheck="false" autocomplete="off" placeholder="main">
+            </label>
+            <label class="dev-field">
+              <span>文件路径</span>
+              <input id="ghPath" spellcheck="false" autocomplete="off" placeholder="public/data/sponsors.json">
+            </label>
+          </div>
+
+          <label class="dev-field">
+            <span>访问令牌</span>
+            <input id="ghToken" type="password" spellcheck="false" autocomplete="off" placeholder="github_pat_...">
+          </label>
+
+          <div class="dev-actions">
+            <button class="btn btn-line btn-sm" type="button" id="ghSaveCfg">记住配置</button>
+            <button class="btn btn-line btn-sm" type="button" id="ghTest">测试连接</button>
+            <button class="btn btn-line btn-sm dev-danger" type="button" id="ghClearCfg">清除配置</button>
+          </div>
+
+          <p class="dev-msg" id="ghMsg" role="status" aria-live="polite"></p>
+        </div>
+      </details>
+    </div>
+  </aside>
+</div>
+
+<!-- 感谢名单兜底数据：本地直接用 file:// 打开时 fetch 会被拦截，此时用这份内联数据 -->
+<script type="application/json" id="sponsorFallback">
+{"updated":"2026-10-02","currency":"CNY","sponsors":[{"name":"Minicrft","amount":10,"date":"2026-10-02"}]}
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>
